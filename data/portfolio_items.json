@@ -1,17 +1,13 @@
 [
   {
-    "name": "My First HTML Page",
-    "description": "A simple static page demonstrating basic HTML structure and elements.",
-    "url": "#"
+    "name": "Result Summary Component",
+    "description": "A single page site created from a frontend mentor challenge.",
+    "url": "https://emmanuel-result-summary.netlify.app/"
   },
   {
-    "name": "CSS Styling Practice",
-    "description": "Explored various CSS properties to style text, colors, and layout.",
-    "url": "#"
-  },
-  {
-    "name": "Interactive JavaScript Fun",
-    "description": "Implemented basic JavaScript to add dynamic behavior and user interaction.",
-    "url": "#"
+    "name": "Profile Card",
+    "description": "A profile card containing my details.",
+    "url": "https://amalokwu-emmanuel-profile-card.netlify.app/"
   }
+  
 ]
