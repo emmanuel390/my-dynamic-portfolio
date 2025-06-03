@@ -4,9 +4,9 @@ function updateToggleText(){
     if(
         document.body.classList.contains('dark-mode')
     ){
-        toggle.textContent='Light Mode';
+        toggle.textContent='🔆';
     }else{
-        toggle.textContent='Dark Mode';
+        toggle.textContent='🌙';
     }
 }
 toggle.addEventListener('click',()=>{
@@ -16,19 +16,103 @@ toggle.addEventListener('click',()=>{
 updateToggleText();
 
 // Fetch data from json file
-fetch("data/projects")
-  .then((response) => response.json())
+fetch("data/portfolio_items.json")
+  .then((response) => {
+    // Check if the response was successful
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.json();
+  })
   .then((projects) => {
-    const contsiner = document.getElementById("my-projects");
+    const container = document.getElementById("my-projects");
+    // Check if the container element exists
+    if (!container) {
+      console.error("Error: Element with ID 'my-projects' not found.");
+      return;
+    }
+
+    const style = document.createElement('style');
+    style.textContent = `
+      .project {
+        background-color: #f5f5f5;
+        padding: 24px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-bottom: 24px;
+        transition: transform 0.3s ease-in-out, background-color 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      
+
+      .project h1 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #000000;
+        transition: color 0.3s ease;
+      }
+
+      .project p {
+        color: #000000;
+        margin-top: 8px;
+        transition: color 0.3s ease;
+      }
+
+      .project a {
+        display: inline-block;
+        margin-top: 16px;
+        padding: 8px 16px;
+        background-color: #3b82f6;
+        color: #ffffff;
+        border-radius: 6px;
+        text-decoration: none;
+        transition: background-color 0.3s ease-in-out;
+      }
+        .project a:hover {
+        transform: scale(1.05);
+      }
+
+
+      body.dark-mode .project {
+        background-color: #121212;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      }
+
+      body.dark-mode .project h1 {
+        color: #ffffff;
+      }
+
+      body.dark-mode .project p {
+        color: #ffffff;
+      }
+
+      body.dark-mode .project a {
+        background-color: #4299e1;
+      }
+      body.dark-mode a:hover {
+        transform: scale(1.05);
+      }
+
+      }
+    `;
+    document.head.appendChild(style);
+
+
     projects.forEach((project) => {
       const div = document.createElement("div");
-      div.className = "project";
-      div.innerHTML =
-        '<h1>${project.name}</h1><p>${project.description}</p><a href="${project.url} target="_blank">View Project</a>';
+      div.className = "project"; // Assign the vanilla CSS class
+
+      // Removed Tailwind classes from inner HTML, now relying on the .project selector
+      div.innerHTML = `
+        <h2>${project.name}</h2>
+        <p>${project.description}</p>
+        <a href="${project.url}" target="_blank">View Project</a>
+      `;
       container.appendChild(div);
     });
   })
-  .catch((error) => console.error("Error fetching project data", error));
+  .catch((error) => console.error("Error fetching project data:", error)); // Improved error message
+
 
 // // script.js
 
